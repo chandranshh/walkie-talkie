@@ -1,4 +1,22 @@
+import { useState } from "react";
+
 function Register() {
+  const [user, setUser] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    console.log(user);
+  };
+
   return (
     <>
       <div className="h-screen w-screen text-white flex justify-center items-center">
@@ -9,13 +27,13 @@ function Register() {
                 <span className="text-3xl">Welcome to walkie-talkie</span>
               </div>
               <div className="text-xl">
-                Register youself today, since you do not have friends in real
+                Register yourself today since you do not have friends in real
                 life.
               </div>
             </div>
             <form
-              action="submit"
               className="flex flex-col w-full h-[70%] justify-start items-center"
+              onSubmit={handleRegister}
             >
               <div className="h-[30%] w-[80%] flex flex-col items-center">
                 <div className="w-full h-12 text-center">
@@ -26,6 +44,21 @@ function Register() {
                   type="text"
                   name="email"
                   placeholder="Enter your email"
+                  value={user.email}
+                  onChange={handleInput}
+                />
+              </div>
+              <div className="h-[30%] w-[80%] flex flex-col items-center">
+                <div className="w-full h-12 text-center">
+                  <span className="text-2xl">Username</span>
+                </div>
+                <input
+                  className="h-[30px] rounded-lg text-gray-800 px-2 py-1"
+                  type="text"
+                  name="username"
+                  placeholder="Enter your username"
+                  value={user.username}
+                  onChange={handleInput}
                 />
               </div>
               <div className="h-[30%] w-[80%] flex flex-col items-center">
@@ -37,6 +70,8 @@ function Register() {
                   type="password"
                   name="password"
                   placeholder="Enter your password"
+                  value={user.password}
+                  onChange={handleInput}
                 />
               </div>
               <button
