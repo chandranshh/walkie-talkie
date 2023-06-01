@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { register } from "../../controllers/userAuth/register";
 
 function Register() {
   const [user, setUser] = useState({
@@ -14,7 +15,7 @@ function Register() {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(user);
+    register(user.email, user.username, user.password);
   };
 
   return (
