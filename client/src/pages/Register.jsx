@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { register } from "../../controllers/userAuth/register";
+import { register } from "../controllers/userAuth/register";
 import { useDispatch, useSelector } from "react-redux";
-import { setSenderData } from "../../features/slices/senderDataSlice";
-import { setToken } from "../../features/slices/getTokenSlice";
+import { setSenderData } from "../features/slices/senderDataSlice";
+import { setToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
