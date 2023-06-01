@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { register } from "../../controllers/userAuth/register";
+import { useDispatch, useSelector } from "react-redux";
+import { setSenderData } from "../../features/slices/senderData";
 
 function Register() {
   const [user, setUser] = useState({
@@ -8,15 +10,25 @@ function Register() {
     password: "",
   });
 
+  const dispatch = useDispatch();
+
   const handleInput = (e) => {
     e.preventDefault();
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    register(user.email, user.username, user.password);
+    const registerData = await register(
+      user.email,
+      user.username,
+      user.password
+    );
+    dispatch(setSenderData(registerData?.user));
   };
+
+  const senderData = useSelector((state) => state.senderData);
+  console.log(senderData);
 
   return (
     <>

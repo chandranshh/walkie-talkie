@@ -1,15 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import { persistStore, persistReducer } from "redux-persist";
-// import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import senderDataSlice from "./slices/senderData";
 
-// const persistTest = {
-//   key: "test",
-//   storage,
-// };
+const persistConfigSenderData = {
+  key: "senderData",
+  storage,
+};
+
+const persistedReducerSenderData = persistReducer(
+  persistConfigSenderData,
+  senderDataSlice
+);
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    senderData: persistedReducerSenderData,
+  },
 });
 
-// export const persistor = persistStore(store);
+export const persistor = persistStore(store);
 export default store;
