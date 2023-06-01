@@ -2,6 +2,8 @@ import { useState } from "react";
 import { register } from "../../controllers/userAuth/register";
 import { useDispatch, useSelector } from "react-redux";
 import { setSenderData } from "../../features/slices/senderDataSlice";
+import { setToken } from "../../features/slices/getTokenSlice";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [user, setUser] = useState({
@@ -11,6 +13,7 @@ function Register() {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -24,7 +27,11 @@ function Register() {
       user.username,
       user.password
     );
-    dispatch(setSenderData(registerData?.user));
+    if (registerData) {
+      dispatch(setSenderData(registerData?.user));
+      dispatch(setToken(registerData));
+      navigate("/chat");
+    }
   };
 
   const senderData = useSelector((state) => state.senderData);
