@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { register } from "../../controllers/userAuth/register";
 import { useDispatch, useSelector } from "react-redux";
-import { setSenderData } from "../../features/slices/senderData";
+import { setSenderData } from "../../features/slices/senderDataSlice";
 
 function Register() {
   const [user, setUser] = useState({
