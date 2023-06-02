@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLogoutState } from "../features/slices/senderDataSlice";
 import { logoutToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
+import { socket } from "../socket";
 
 function Sidebar() {
   const senderData = useSelector((state) => state.senderData);
@@ -11,12 +11,9 @@ function Sidebar() {
   const navigate = useNavigate();
 
   const setLogoutHandler = () => {
-    const socket = io("http://localhost:3001", { transports: ["websocket"] });
-
-    socket.emit("logout"); // Emit a "disconnect" event when the user logs out
-
     dispatch(setLogoutState());
     dispatch(logoutToken());
+    socket.emit("logout", senderData);
     navigate("/register");
   };
 

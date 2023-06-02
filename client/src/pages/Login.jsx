@@ -1,10 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import { login } from "../controllers/userAuth/login";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSenderData } from "../features/slices/senderDataSlice";
 import { setToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import { useState } from "react";
 
 function Login() {
   const [user, setUser] = useState({
