@@ -31,27 +31,32 @@ server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 // Socket.io
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: "*",
+//   },
+// });
 
-let users = [];
+// Server-side code
+// let users = [];
 
-io.on("connection", (socket) => {
-  socket.on("connected", (data) => {
-    const existingUser = users.find((user) => user._id === data._id);
-    if (!existingUser) {
-      users.push({
-        _id: data._id,
-        username: data.username,
-        email: data.email,
-        socketId: socket.id,
-      });
-    }
-    socket.emit("users", users); // Emit the updated users array
+// io.on("connection", (socket) => {
+//   socket.on("connected", (data) => {
+//     const existingUser = users.find((user) => user._id === data._id);
+//     if (!existingUser) {
+//       users.push({
+//         _id: data._id,
+//         username: data.username,
+//         email: data.email,
+//         socketId: socket.id,
+//       });
+//     }
+//     socket.emit("users", users);
+//   });
 
-    console.log(users); // Log the updated users array
-  });
-});
+//   socket.on("logout", () => {
+//     users = users.filter((user) => user.socketId !== socket.id);
+//   });
+
+//   console.log(users);
+// });
