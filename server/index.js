@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
-const { log } = require("console");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -27,36 +26,39 @@ app.use("/api/users", require("./routes/fetchUser/fetchUser"));
 const port = process.env.PORT || 3001;
 
 const server = http.createServer(app);
-server.listen(port, () => {
+
+server.listen(3001, () => {
   console.log(`Server running on port ${port}`);
 });
+
 // Socket.io
-// const io = new Server(server, {
-//   cors: {
-//     origin: "*",
-//   },
-// });
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 // Server-side code
-// let users = [];
+let users = [];
 
-// io.on("connection", (socket) => {
-//   socket.on("connected", (data) => {
-//     const existingUser = users.find((user) => user._id === data._id);
-//     if (!existingUser) {
-//       users.push({
-//         _id: data._id,
-//         username: data.username,
-//         email: data.email,
-//         socketId: socket.id,
-//       });
-//     }
-//     socket.emit("users", users);
-//   });
+io.on("connection", (socket) => {
+  socket.on("connected", (data) => {
+    const existingUser = users.find((user) => user._id === data._id);
+    if (!existingUser) {
+      if (data._id) {
+        users.push({
+          _id: data._id,
+          username: data.username,
+          email: data.email,
+          socketId: socket.id,
+        });
+        socket.emit("users", users);
+      }
+      console.log(users);
+    }
+  });
 
-//   socket.on("logout", () => {
-//     users = users.filter((user) => user.socketId !== socket.id);
-//   });
-
-//   console.log(users);
-// });
+  socket.on("logout", () => {
+    users = users.filter((user) => user.socketId !== socket.id);
+  });
+});
