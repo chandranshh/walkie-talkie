@@ -21,6 +21,8 @@ require("./connection");
 
 // Routes
 app.use("/api/auth/register", require("./routes/userAuth/register"));
+app.use("/api/auth/login", require("./routes/userAuth/login"));
+app.use("/api/users", require("./routes/fetchUser/fetchUser"));
 
 //port listening
 const port = process.env.PORT;
