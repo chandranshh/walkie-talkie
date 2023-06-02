@@ -1,8 +1,13 @@
+import Chatbox from "../components/Chatbox";
+import OnlineUsers from "../components/OnlineUsers";
+import Sidebar from "../components/Sidebar";
+
 function Chat() {
   return (
-    <div>
-      <h1>Sidebar for userselection</h1>
-      <h1>Chatbox</h1>
+    <div className="flex h-screen">
+      <Sidebar />
+      <Chatbox />
+      <OnlineUsers />
     </div>
   );
 }

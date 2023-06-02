@@ -11,9 +11,12 @@ const getTokenSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload.token;
     },
+    logoutToken: (state) => {
+      state.token = "";
+    },
   },
 });
 
-export const { setToken } = getTokenSlice.actions;
+export const { setToken, logoutToken } = getTokenSlice.actions;
 
 export default getTokenSlice.reducer;

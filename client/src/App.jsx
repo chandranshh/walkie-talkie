@@ -6,7 +6,7 @@ import Chat from "./pages/Chat";
 
 function App() {
   return (
-    <div className="bg-gray-500">
+    <div>
       <Provider store={store}>
         <Router>
           <Routes>

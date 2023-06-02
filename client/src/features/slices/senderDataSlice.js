@@ -14,9 +14,14 @@ const senderDataSlice = createSlice({
       state.email = action.payload.email;
       state.username = action.payload.username;
     },
+    setLogoutState: (state) => {
+      state._id = "";
+      state.email = "";
+      state.username = "";
+    },
   },
 });
 
-export const { setSenderData } = senderDataSlice.actions;
+export const { setSenderData, setLogoutState } = senderDataSlice.actions;
 
 export default senderDataSlice.reducer;

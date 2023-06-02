@@ -38,7 +38,7 @@ function Register() {
   console.log(senderData);
 
   return (
-    <>
+    <div className="bg-gray-500">
       <div className="h-screen w-screen text-white flex justify-center items-center">
         <div className="h-full w-[50%] flex items-center ">
           <div className=" w-full h-[70%] flex flex-col">
@@ -104,7 +104,7 @@ function Register() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
