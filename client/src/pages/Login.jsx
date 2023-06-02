@@ -22,10 +22,10 @@ function Login() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const registerData = await login(user.username, user.password);
-    if (registerData) {
-      dispatch(setSenderData(registerData?.user));
-      dispatch(setToken(registerData));
+    const loginData = await login(user.username, user.password);
+    if (loginData) {
+      dispatch(setSenderData(loginData?.user));
+      dispatch(setToken(loginData));
       navigate("/chat");
     }
   };

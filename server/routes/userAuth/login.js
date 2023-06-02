@@ -2,8 +2,15 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 dotenv.config();
+
+router.use(
+  cors({
+    origin: "*",
+  })
+);
 
 //import schema
 const Users = require("../../models/Users");
