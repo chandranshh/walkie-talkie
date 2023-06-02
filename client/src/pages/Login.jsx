@@ -1,10 +1,10 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
 import { login } from "../controllers/userAuth/login";
 import { useDispatch, useSelector } from "react-redux";
 import { setSenderData } from "../features/slices/senderDataSlice";
 import { setToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 function Login() {
   const [user, setUser] = useState({
@@ -29,9 +29,6 @@ function Login() {
       navigate("/chat");
     }
   };
-
-  const senderData = useSelector((state) => state.senderData);
-  console.log(senderData);
 
   return (
     <div className="bg-gray-500">

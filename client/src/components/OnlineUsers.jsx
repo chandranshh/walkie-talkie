@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import { fetchAllUsers } from "../controllers/chat/fetchUsers";
 import { useEffect, useState } from "react";
 
-function OnlineUsers(props) {
-  console.log(props.online);
+function OnlineUsers() {
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
@@ -30,11 +30,11 @@ function OnlineUsers(props) {
         <div className="p-2 bg-slate-200 w-full text-center">
           <span>Online user(s)</span>
         </div>
-        {props.online.map((user) => (
+        {/* {props.online.map((user) => (
           <div className="p-2" key={user?._id}>
             {user?.username}
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
