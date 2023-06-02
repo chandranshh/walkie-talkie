@@ -58,7 +58,9 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("logout", () => {
-    users = users.filter((user) => user.socketId !== socket.id);
+  socket.on("logout", (data) => {
+    users = users.filter((user) => user._id !== data._id);
+    socket.emit("users", users); // Emit the updated users array to clients
   });
+  console.log(users);
 });
