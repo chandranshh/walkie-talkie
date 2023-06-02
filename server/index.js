@@ -27,7 +27,9 @@ app.use("/api/users", require("./routes/fetchUser/fetchUser"));
 const port = process.env.PORT || 3001;
 
 const server = http.createServer(app);
-
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
 // Socket.io
 const io = new Server(server, {
   cors: {
@@ -49,11 +51,7 @@ io.on("connection", (socket) => {
       });
     }
     socket.emit("users", users); // Emit the updated users array
+
+    console.log(users); // Log the updated users array
   });
-});
-
-console.log(users);
-
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`);
 });
