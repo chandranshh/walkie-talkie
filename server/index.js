@@ -1,7 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const http = require("http");
 const { Server } = require("socket.io");
+const { log } = require("console");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -10,18 +12,9 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Replace with your frontend URL
-    credentials: true,
-    transport: ["websocket"],
-  })
-);
 
-//test
-app.get(`/`, (req, res) => {
-  res.send("API is working");
-});
+// Enable CORS
+app.use(cors());
 
 // Connect to MongoDB
 require("./connection");
@@ -33,6 +26,34 @@ app.use("/api/users", require("./routes/fetchUser/fetchUser"));
 
 const port = process.env.PORT || 3001;
 
-const server = app.listen(port, () => {
-  console.log(`Express server listening on port: ${port}`);
+const server = http.createServer(app);
+
+// Socket.io
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+let users = [];
+
+io.on("connection", (socket) => {
+  socket.on("connected", (data) => {
+    const existingUser = users.find((user) => user._id === data._id);
+    if (!existingUser) {
+      users.push({
+        _id: data._id,
+        username: data.username,
+        email: data.email,
+        socketId: socket.id,
+      });
+    }
+    socket.emit("users", users); // Emit the updated users array
+  });
+});
+
+console.log(users);
+
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
