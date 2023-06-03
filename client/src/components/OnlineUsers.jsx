@@ -44,26 +44,36 @@ function OnlineUsers() {
 
   return (
     <div className="w-[30%] h-full">
-      <div className="h-[50%] flex flex-col">
+      <div className="h-[48%] flex flex-col">
         <div className="p-2 bg-slate-200 w-full text-center">
           <span>All user(s)</span>
         </div>
-        {allUsers.map((user) => (
-          <div className="p-2" key={user?._id}>
-            {user?.username}
-          </div>
-        ))}
+        <div className="overflow-y-scroll h-full">
+          {allUsers.map((user) => (
+            <div
+              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm"
+              key={user?._id}
+            >
+              {user?.username}
+            </div>
+          ))}
+        </div>
       </div>
       <br />
-      <div className="h-[50%]">
+      <div className="h-[48%]">
         <div className="p-2 bg-slate-200 w-full text-center">
           <span>Online user(s)</span>
         </div>
-        {onlineUsers.map((user) => (
-          <div className="p-2" key={user?._id}>
-            {user?.username}
-          </div>
-        ))}
+        <div>
+          {onlineUsers.map((user) => (
+            <div
+              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm"
+              key={user?._id}
+            >
+              {user?.username}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
