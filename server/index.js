@@ -22,6 +22,7 @@ require("./connection");
 app.use("/api/auth/register", require("./routes/userAuth/register"));
 app.use("/api/auth/login", require("./routes/userAuth/login"));
 app.use("/api/users", require("./routes/fetchUser/fetchUser"));
+app.use("/api/chat", require("./routes/chatHelper/startConvo"));
 
 const port = process.env.PORT || 3001;
 
