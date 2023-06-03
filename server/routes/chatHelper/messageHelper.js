@@ -7,26 +7,26 @@ const Message = require("../../models/Message");
 
 // Send a message
 router.post("/", async (req, res) => {
-  const { roomId, senderId, content } = req.body;
+  const { senderId, receiverId, content } = req.body;
 
   try {
-    // Check if the conversation exists
-    const conversation = await Conversation.findById(roomId);
+    // Check if a conversation already exists between sender and receiver
+    let conversation = await Conversation.findOne({
+      members: { $all: [senderId, receiverId] },
+    });
 
     if (!conversation) {
-      return res.status(404).json({ error: "Conversation not found" });
-    }
+      // If conversation doesn't exist, create a new conversation
+      const newConversation = new Conversation({
+        members: [senderId, receiverId],
+      });
 
-    // Check if the sender is a member of the conversation
-    if (!conversation.members.includes(senderId)) {
-      return res
-        .status(403)
-        .json({ error: "You are not a member of this conversation" });
+      conversation = await newConversation.save();
     }
 
     // Create a new message
     const newMessage = new Message({
-      roomId,
+      roomId: conversation._id,
       sender: senderId,
       content,
     });
