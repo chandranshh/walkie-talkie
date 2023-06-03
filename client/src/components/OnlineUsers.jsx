@@ -1,12 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useSelector } from "react-redux";
 import { fetchAllUsers } from "../controllers/chat/fetchUsers";
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
+import { setReceiverData } from "../features/slices/setReceiverData";
+import { useDispatch } from "react-redux";
 
 function OnlineUsers() {
   const [allUsers, setAllUsers] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const senderData = useSelector((state) => state.senderData);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -43,15 +48,15 @@ function OnlineUsers() {
   }, [socket]);
 
   return (
-    <div className="w-[30%] h-full">
+    <div className="w-[30%] h-[97vh]">
       <div className="h-[48%] flex flex-col">
-        <div className="p-2 bg-slate-200 w-full text-center">
+        <div className="p-2 mt-2 bg-slate-200 w-[98%] text-center">
           <span>All user(s)</span>
         </div>
         <div className="overflow-y-scroll h-full">
           {allUsers.map((user) => (
             <div
-              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm"
+              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-3 cursor-pointer"
               key={user?._id}
             >
               {user?.username}
@@ -61,13 +66,13 @@ function OnlineUsers() {
       </div>
       <br />
       <div className="h-[48%]">
-        <div className="p-2 bg-slate-200 w-full text-center">
+        <div className="p-2 mt-2 mr-12 bg-slate-200 w-[98%] text-center">
           <span>Online user(s)</span>
         </div>
         <div>
           {onlineUsers.map((user) => (
             <div
-              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm"
+              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-2 cursor-pointer"
               key={user?._id}
             >
               {user?.username}
