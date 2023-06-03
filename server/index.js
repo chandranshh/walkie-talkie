@@ -27,7 +27,7 @@ const port = process.env.PORT || 3001;
 
 const server = http.createServer(app);
 
-server.listen(3001, () => {
+server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
@@ -39,6 +39,7 @@ const io = new Server(server, {
 });
 
 // Server-side code
+// Server-side code
 let users = [];
 
 io.on("connection", (socket) => {
@@ -46,21 +47,23 @@ io.on("connection", (socket) => {
     const existingUser = users.find((user) => user._id === data._id);
     if (!existingUser) {
       if (data._id) {
-        users.push({
+        const newUser = {
           _id: data._id,
           username: data.username,
           email: data.email,
           socketId: socket.id,
-        });
+        };
+        users.push(newUser);
+        io.emit("newUser", newUser); // Emit the newUser event to all clients except the newly connected client
         io.emit("users", users);
       }
       console.log(users);
     }
   });
 
-  socket.on("logout", (data) => {
-    users = users.filter((user) => user._id !== data._id);
-    io.emit("newUser", users); // Emit the updated users array to clients
+  socket.on("disconnect", () => {
+    users = users.filter((user) => user.socketId !== socket.id);
+    io.emit("userLeft", socket.id); // Emit the disconnected user's socketId to clients
     console.log(users);
   });
 });
