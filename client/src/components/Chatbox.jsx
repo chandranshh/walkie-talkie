@@ -1,13 +1,17 @@
 import { useSelector } from "react-redux";
 
 function Chatbox() {
-  const { receiverData } = useSelector((state) => state.receiverData);
-  console.log(receiverData);
+  const { receiverData, sideBarUser } = useSelector(
+    (state) => state.receiverData
+  );
+  console.log(receiverData, sideBarUser);
 
   return (
     <div className="w-[80%] h-[97vh] bg-blue-100 mx-2 flex flex-col items-center mt-2">
       <div className="w-[98%] h-14 bg-white mt-3 rounded-md p-2 flex items-center">
-        {`It's you're bae, ${receiverData?.user?.username}`}
+        {`It's you're bae, ${
+          receiverData ? receiverData.user.username : sideBarUser.username
+        }`}
       </div>
       <div className="h-[95%] w-[98%] mx-2 mt-2 px-2 flex justify-center bg-white rounded-md overflow-y-auto">
         <div className="w-full h-full mt-3">

@@ -15,7 +15,7 @@ function Sidebar() {
 
   const [allConvo, setAllConvo] = useState([]);
 
-  const { receiverData } = useSelector((state) => state.receiverData);
+  const receiverData = useSelector((state) => state.receiverData);
   console.log(receiverData);
 
   const setLogoutHandler = () => {

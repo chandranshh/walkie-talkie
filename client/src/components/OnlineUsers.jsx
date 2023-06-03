@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { fetchAllUsers } from "../controllers/chat/fetchUsers";
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
-import { setReceiverData } from "../features/slices/setReceiverData";
+import { setSideBarUser } from "../features/slices/setReceiverData";
 import { useDispatch } from "react-redux";
 
 function OnlineUsers() {
@@ -47,6 +47,8 @@ function OnlineUsers() {
     };
   }, [socket]);
 
+  console.log(allUsers);
+
   return (
     <div className="w-[30%] h-[97vh]">
       <div className="h-[48%] flex flex-col">
@@ -58,6 +60,7 @@ function OnlineUsers() {
             <div
               className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-3 cursor-pointer"
               key={user?._id}
+              onClick={() => dispatch(setSideBarUser(user))}
             >
               {user?.username}
             </div>
@@ -74,6 +77,7 @@ function OnlineUsers() {
             <div
               className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-2 cursor-pointer"
               key={user?._id}
+              onClick={() => dispatch(setSideBarUser(user))}
             >
               {user?.username}
             </div>
