@@ -39,15 +39,37 @@ router.post("/", async (req, res) => {
 });
 
 // Get all conversations of a user (for the sidebar)
+// Get all conversations of a user (for the sidebar)
 router.get("/:userId", async (req, res) => {
   try {
-    const conversations = await Conversation.find({
-      members: { $in: [req.params.userId] },
+    const userId = req.params.userId;
+    const convos = await Conversation.find({
+      members: {
+        $in: [userId],
+      },
     });
-    res.json(conversations);
+    const convoUserData = Promise.all(
+      convos.map(async (convo) => {
+        const receiverId = await convo.members.find(
+          (member) => member !== userId
+        );
+        const user = await User.findById(receiverId);
+        return {
+          user: {
+            username: user.username,
+            email: user.email,
+            _id: user._id,
+          },
+          roomId: convo._id,
+        };
+      })
+    );
+    res.status(200).json(await convoUserData);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
+module.exports = router;
 
 module.exports = router;
