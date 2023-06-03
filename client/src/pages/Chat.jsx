@@ -11,16 +11,38 @@ function Chat() {
 
   useEffect(() => {
     socket.emit("connected", senderData);
+  }, [socket]);
+
+  useEffect(() => {
     socket.on("users", (users) => {
       setOnlineUsers(users);
     });
+
+    return () => {
+      socket.off("users");
+    };
   }, [socket]);
+
+  useEffect(() => {
+    socket.on("newUser", (user) => {
+      setOnlineUsers(user);
+    });
+
+    return () => {
+      socket.off("newUser");
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    console.log(onlineUsers);
+  }, [onlineUsers]);
 
   return (
     <div className="flex h-screen">
       <Sidebar />
       <Chatbox />
-      <OnlineUsers />
+      <OnlineUsers online={onlineUsers} />{" "}
+      {/* Pass the updated onlineUsers to the OnlineUsers component */}
     </div>
   );
 }
