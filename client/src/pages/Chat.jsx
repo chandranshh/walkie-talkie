@@ -8,7 +8,6 @@ function Chat() {
       <Sidebar />
       <Chatbox />
       <OnlineUsers />
-      {/* Pass the updated onlineUsers to the OnlineUsers component */}
     </div>
   );
 }
