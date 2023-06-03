@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 import { fetchAllUsers } from "../controllers/chat/fetchUsers";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { socket } from "../socket";
 
 function OnlineUsers() {
   const [allUsers, setAllUsers] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const senderData = useSelector((state) => state.senderData);
-  const onlineUsersDisplay = useRef([]);
 
   useEffect(() => {
     const getAllUsers = async () => {
@@ -43,10 +42,6 @@ function OnlineUsers() {
     };
   }, [socket]);
 
-  useEffect(() => {
-    onlineUsersDisplay.current = onlineUsers.map((user) => user);
-  }, [onlineUsers]);
-
   return (
     <div className="w-[30%] h-full">
       <div className="h-[50%] flex flex-col">
@@ -64,7 +59,7 @@ function OnlineUsers() {
         <div className="p-2 bg-slate-200 w-full text-center">
           <span>Online user(s)</span>
         </div>
-        {onlineUsersDisplay.current.map((user) => (
+        {onlineUsers.map((user) => (
           <div className="p-2" key={user?._id}>
             {user?.username}
           </div>

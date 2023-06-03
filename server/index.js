@@ -64,6 +64,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     users = users.filter((user) => user.socketId !== socket.id);
     io.emit("userLeft", socket.id); // Emit the disconnected user's socketId to clients
+    io.emit("logout", socket.id); // Emit the disconnected user's socketId to clients
     console.log(users);
   });
 });
