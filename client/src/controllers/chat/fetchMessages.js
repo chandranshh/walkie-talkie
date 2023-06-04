@@ -7,5 +7,6 @@ export const fetchMessages = async (roomId) => {
     return response.data;
   } catch (error) {
     console.error(error);
+    return [];
   }
 };
