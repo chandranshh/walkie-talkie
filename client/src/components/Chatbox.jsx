@@ -1,16 +1,26 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { checkConvo } from "../controllers/chat/checkConvo";
+import { useEffect } from "react";
 
 function Chatbox() {
   const { receiverData, sideBarUser } = useSelector(
     (state) => state.receiverData
   );
-  console.log(receiverData, sideBarUser);
+  const { roomData } = useSelector((state) => state); // Assuming roomData is stored directly in the state
+
+  const dispatch = useDispatch();
+
+  const senderData = useSelector((state) => state.senderData);
+  const roomId = receiverData?.roomId || roomData?.roomId;
+  useEffect(() => {
+    dispatch({ type: "setRoomData/useSetRoomData", payload: roomId });
+  }, [roomId]);
 
   return (
     <div className="w-[80%] h-[97vh] bg-blue-100 mx-2 flex flex-col items-center mt-2">
       <div className="w-[98%] h-14 bg-white mt-3 rounded-md p-2 flex items-center">
         {`It's you're bae, ${
-          receiverData ? receiverData.user.username : sideBarUser.username
+          receiverData ? receiverData?.user?.username : sideBarUser?.username
         }`}
       </div>
       <div className="h-[95%] w-[98%] mx-2 mt-2 px-2 flex justify-center bg-white rounded-md overflow-y-auto">

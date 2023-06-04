@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { socket } from "../socket";
 import { setSideBarUser } from "../features/slices/setReceiverData";
 import { useDispatch } from "react-redux";
+import { checkConvo } from "../controllers/chat/checkConvo";
 
 function OnlineUsers() {
   const [allUsers, setAllUsers] = useState([]);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const senderData = useSelector((state) => state.senderData);
+  const [recepientData, setRecepientData] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -47,7 +49,17 @@ function OnlineUsers() {
     };
   }, [socket]);
 
-  console.log(allUsers);
+  //console.log(allUsers);
+  // const { sideBarUser } = useSelector((state) => state.receiverData);
+
+  const onClickHandler = async (user) => {
+    dispatch(setSideBarUser(user));
+    setRecepientData(user);
+    const roomData = await checkConvo(senderData?._id, user?._id);
+    dispatch({ type: "setRoomData/useSetRoomData", payload: roomData?.roomId }); //this is quite helpful when you need to dispatch data inside a function or useEffect (workaround)
+  };
+
+  //console.log(recepientData);
 
   return (
     <div className="w-[30%] h-[97vh]">
@@ -60,7 +72,7 @@ function OnlineUsers() {
             <div
               className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-3 cursor-pointer"
               key={user?._id}
-              onClick={() => dispatch(setSideBarUser(user))}
+              onClick={() => onClickHandler(user)}
             >
               {user?.username}
             </div>
@@ -77,7 +89,7 @@ function OnlineUsers() {
             <div
               className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-2 cursor-pointer"
               key={user?._id}
-              onClick={() => dispatch(setSideBarUser(user))}
+              onClick={() => onClickHandler(user)}
             >
               {user?.username}
             </div>

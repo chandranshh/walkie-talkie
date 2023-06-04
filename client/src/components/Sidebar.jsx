@@ -18,6 +18,8 @@ function Sidebar() {
   const receiverData = useSelector((state) => state.receiverData);
   console.log(receiverData);
 
+  const { sideBarUser } = useSelector((state) => state.receiverData);
+
   const setLogoutHandler = () => {
     dispatch(setLogoutState());
     dispatch(logoutToken());
