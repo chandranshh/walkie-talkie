@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchMessages } from "../controllers/chat/fetchMessages";
 import { sendMessage } from "../controllers/chat/sendMessage";
+import { socket } from "../socket";
 
 function Chatbox() {
   const { receiverData, sideBarUser } = useSelector(
@@ -42,8 +43,28 @@ function Chatbox() {
       typeMessage
     );
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+    socket.emit("sendMessage", {
+      sender: senderData?._id,
+      receiver: receiverData ? receiverData?.user?._id : sideBarUser?._id,
+      content: typeMessage,
+      roomId: reduxRoomId,
+    });
     setTypeMessage("");
   };
+
+  useEffect(() => {
+    socket.on(
+      "newMessage",
+      (message) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      },
+      [messages]
+    );
+
+    return () => {
+      socket.off("newMessage");
+    };
+  });
 
   return (
     <div className="w-[80%] h-[97vh] bg-blue-100 mx-2 flex flex-col items-center mt-2">
