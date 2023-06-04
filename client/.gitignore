@@ -12,7 +12,8 @@ dist
 dist-ssr
 *.local
 .env
-
+/src/main.jsx
+/src/socket.js
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
