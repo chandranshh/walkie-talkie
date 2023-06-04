@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchMessages } from "../controllers/chat/fetchMessages";
+import { sendMessage } from "../controllers/chat/sendMessage";
 
 function Chatbox() {
   const { receiverData, sideBarUser } = useSelector(
@@ -12,6 +13,7 @@ function Chatbox() {
   const roomId = receiverData?.roomId || roomData?.roomId;
 
   const [messages, setMessages] = useState([]);
+  const [typeMessage, setTypeMessage] = useState("");
 
   useEffect(() => {
     dispatch({ type: "setRoomData/useSetRoomData", payload: roomId });
@@ -33,6 +35,16 @@ function Chatbox() {
     console.log(messages);
   }, [messages]);
 
+  const sendMessageHandler = async () => {
+    const newMessage = await sendMessage(
+      senderData?._id,
+      receiverData ? receiverData?.user?._id : sideBarUser?._id,
+      typeMessage
+    );
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+    setTypeMessage("");
+  };
+
   return (
     <div className="w-[80%] h-[97vh] bg-blue-100 mx-2 flex flex-col items-center mt-2">
       <div className="w-[98%] h-14 bg-white mt-3 rounded-md p-2 flex items-center">
@@ -52,48 +64,19 @@ function Chatbox() {
               Shin-Sna
             </div>
           </div>
-          <div className="flex justify-start">
-            <div className="bg-blue-500 max-w-[48%] m-2 p-2 rounded-md text-white">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
-              natus eos porro. Tenetur dicta ex velit illum minima quos officia?
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <div className="bg-gray-200 max-w-[49%] m-2 p-2 rounded-md">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. A minus
-              neque, aperiam architecto suscipit officiis?
-            </div>
-          </div>
-          <div className="flex justify-start">
-            <div className="bg-blue-500 max-w-[48%] m-2 p-2 rounded-md text-white">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
-              natus eos porro. Tenetur dicta ex velit illum minima quos officia?
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <div className="bg-gray-200 max-w-[49%] m-2 p-2 rounded-md">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. A minus
-              neque, aperiam architecto suscipit officiis?
-            </div>
-          </div>
-          <div className="flex justify-start">
-            <div className="bg-blue-500 max-w-[48%] m-2 p-2 rounded-md  text-white">
-              Hello
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <div className="bg-gray-200 max-w-[49%] m-2 p-2 rounded-md">
-              How are you?
-            </div>
-          </div>
         </div>
       </div>
       <div className="flex items-center w-full justify-center mt-2 mb-2">
         <input
-          className="w-[98%] h-14 rounded-lg text-gray-800 px-2 py-1"
+          className="w-[98%] h-14 rounded-lg text-gray-800 px-2 py-1 ml-2"
           type="text"
           placeholder="Enter your message"
+          value={typeMessage}
+          onChange={(e) => setTypeMessage(e.target.value)}
         />
+        <button className="p-4" onClick={sendMessageHandler}>
+          Send
+        </button>
       </div>
     </div>
   );
