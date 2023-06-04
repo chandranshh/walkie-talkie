@@ -49,17 +49,12 @@ function OnlineUsers() {
     };
   }, [socket]);
 
-  //console.log(allUsers);
-  // const { sideBarUser } = useSelector((state) => state.receiverData);
-
   const onClickHandler = async (user) => {
     dispatch(setSideBarUser(user));
     setRecepientData(user);
     const roomData = await checkConvo(senderData?._id, user?._id);
-    dispatch({ type: "setRoomData/useSetRoomData", payload: roomData?.roomId }); //this is quite helpful when you need to dispatch data inside a function or useEffect (workaround)
+    dispatch({ type: "setRoomData/useSetRoomData", payload: roomData?.roomId });
   };
-
-  //console.log(recepientData);
 
   return (
     <div className="w-[30%] h-[97vh]">
@@ -68,15 +63,17 @@ function OnlineUsers() {
           <span>All user(s)</span>
         </div>
         <div className="overflow-y-scroll h-full">
-          {allUsers.map((user) => (
-            <div
-              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-3 cursor-pointer"
-              key={user?._id}
-              onClick={() => onClickHandler(user)}
-            >
-              {user?.username}
-            </div>
-          ))}
+          {allUsers
+            .filter((user) => user._id !== senderData?._id) // Filter out senderData._id users
+            .map((user) => (
+              <div
+                className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-3 cursor-pointer"
+                key={user?._id}
+                onClick={() => onClickHandler(user)}
+              >
+                {user?.username}
+              </div>
+            ))}
         </div>
       </div>
       <br />
@@ -85,15 +82,17 @@ function OnlineUsers() {
           <span>Online user(s)</span>
         </div>
         <div>
-          {onlineUsers.map((user) => (
-            <div
-              className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-2 cursor-pointer"
-              key={user?._id}
-              onClick={() => onClickHandler(user)}
-            >
-              {user?.username}
-            </div>
-          ))}
+          {onlineUsers
+            .filter((user) => user._id !== senderData?._id) // Filter out senderData._id users
+            .map((user) => (
+              <div
+                className="p-3 bg-gray-100 my-3 rounded-md shadow-sm mr-2 cursor-pointer"
+                key={user?._id}
+                onClick={() => onClickHandler(user)}
+              >
+                {user?.username}
+              </div>
+            ))}
         </div>
       </div>
     </div>
