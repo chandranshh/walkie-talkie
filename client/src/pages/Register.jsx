@@ -22,7 +22,6 @@ function Register() {
   };
 
   const senderData = useSelector((state) => state.senderData);
-  console.log(senderData);
 
   const handleRegister = async (e) => {
     e.preventDefault();

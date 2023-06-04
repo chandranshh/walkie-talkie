@@ -34,8 +34,6 @@ function Sidebar() {
     fetchData();
   }, [senderData]);
 
-  console.log(allConvo);
-
   return (
     <div className="w-[30%] h-[97vh] flex flex-col justify-center ml-2 mt-2">
       <div className="p-1 bg-slate-200 w-full h-[6%] flex justify-between">

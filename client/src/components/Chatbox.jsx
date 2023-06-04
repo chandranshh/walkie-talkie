@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchMessages } from "../controllers/chat/fetchMessages";
@@ -32,10 +33,6 @@ function Chatbox() {
     fetchMessagesData();
     setMessages([]);
   }, [reduxRoomId]);
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
 
   const sendMessageHandler = async () => {
     const newMessage = await sendMessage(
