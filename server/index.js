@@ -18,6 +18,11 @@ app.use(cors());
 // Connect to MongoDB
 require("./connection");
 
+//test
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 // Routes
 app.use("/api/auth/register", require("./routes/userAuth/register"));
 app.use("/api/auth/login", require("./routes/userAuth/login"));
