@@ -22,8 +22,8 @@ function Sidebar() {
     dispatch(setLogoutState());
     dispatch(logoutToken());
     socket.emit("logout", senderData);
-    socket.disconnect();
     navigate("/register");
+    socket.disconnect();
   };
   useEffect(() => {
     const fetchData = async () => {
