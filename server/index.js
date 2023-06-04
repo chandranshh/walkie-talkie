@@ -49,6 +49,7 @@ const io = new Server(server, {
 let users = [];
 
 io.on("connection", (socket) => {
+  io.emit("users", users);
   socket.on("connected", (data) => {
     const existingUser = users.find((user) => user._id === data._id);
     if (!existingUser) {
@@ -77,7 +78,9 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     users = users.filter((user) => user.socketId !== socket.id);
     io.emit("userLeft", socket.id); // Emit the disconnected user's socketId to clients
-    io.emit("logout", socket.id); // Emit the disconnected user's socketId to clients
+    io.emit("logout", socket.id);
+    // Emit the disconnected user's socketId to clients
+    io.emit("users", users);
     console.log(users);
   });
 });
