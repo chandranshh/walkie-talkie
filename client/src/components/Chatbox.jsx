@@ -54,16 +54,21 @@ function Chatbox() {
       </div>
       <div className="h-[95%] w-[98%] mx-2 mt-2 px-2 flex justify-center bg-white rounded-md overflow-y-auto">
         <div className="w-full h-full mt-3">
-          <div className="flex justify-start">
-            <div className="bg-blue-500 max-w-[48%] m-2 p-2 rounded-md text-white">
-              Hi
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <div className="bg-gray-200 max-w-[49%] m-2 p-2 rounded-md">
-              Shin-Sna
-            </div>
-          </div>
+          {messages.map((message) =>
+            message.sender !== senderData?._id ? (
+              <div className="flex justify-start" key={message._id}>
+                <div className="bg-blue-500 max-w-[48%] m-2 p-2 rounded-md text-white">
+                  {message.content}
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-end" key={message._id}>
+                <div className="bg-gray-200 max-w-[49%] m-2 p-2 rounded-md">
+                  {message.content}
+                </div>
+              </div>
+            )
+          )}
         </div>
       </div>
       <div className="flex items-center w-full justify-center mt-2 mb-2">
