@@ -39,7 +39,6 @@ router.post("/", async (req, res) => {
 });
 
 // Get all conversations of a user (for the sidebar)
-// Get all conversations of a user (for the sidebar)
 router.get("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -69,7 +68,5 @@ router.get("/:userId", async (req, res) => {
     res.status(500).json(error);
   }
 });
-
-module.exports = router;
 
 module.exports = router;
