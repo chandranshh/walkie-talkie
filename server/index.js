@@ -41,7 +41,6 @@ const io = new Server(server, {
 });
 
 // Server-side code
-// Server-side code
 let users = [];
 
 io.on("connection", (socket) => {
@@ -60,6 +59,13 @@ io.on("connection", (socket) => {
         io.emit("users", users);
       }
       console.log(users);
+    }
+  });
+
+  socket.on("sendMessage", (data) => {
+    const receiver = users.find((user) => user._id === data.receiver);
+    if (receiver) {
+      io.to(receiver.socketId).emit("newMessage", data);
     }
   });
 
