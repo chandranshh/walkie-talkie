@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSenderData } from "../features/slices/senderDataSlice";
 import { setToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { socket } from "../socket";
 
 function Login() {
