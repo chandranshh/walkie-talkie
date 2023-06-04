@@ -25,9 +25,7 @@ function OnlineUsers() {
 
   useEffect(() => {
     socket.emit("connected", senderData);
-  }, [senderData]);
 
-  useEffect(() => {
     socket.on("users", (users) => {
       setOnlineUsers(users);
     });

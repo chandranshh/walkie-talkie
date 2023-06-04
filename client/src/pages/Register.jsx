@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSenderData } from "../features/slices/senderDataSlice";
 import { setToken } from "../features/slices/getTokenSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { socket } from "../socket";
 
 function Register() {
   const [user, setUser] = useState({
@@ -20,6 +21,9 @@ function Register() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  const senderData = useSelector((state) => state.senderData);
+  console.log(senderData);
+
   const handleRegister = async (e) => {
     e.preventDefault();
     const registerData = await register(
@@ -30,12 +34,10 @@ function Register() {
     if (registerData) {
       dispatch(setSenderData(registerData?.user));
       dispatch(setToken(registerData));
+      socket.emit("connected", senderData);
       navigate("/chat");
     }
   };
-
-  const senderData = useSelector((state) => state.senderData);
-  console.log(senderData);
 
   return (
     <div className="bg-gray-500">

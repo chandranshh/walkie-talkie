@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import { login } from "../controllers/userAuth/login";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSenderData } from "../features/slices/senderDataSlice";
 import { setToken } from "../features/slices/getTokenSlice";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { socket } from "../socket";
 
 function Login() {
   const [user, setUser] = useState({
@@ -20,12 +21,15 @@ function Login() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  const senderData = useSelector((state) => state.senderData);
+
   const handleRegister = async (e) => {
     e.preventDefault();
     const loginData = await login(user.username, user.password);
     if (loginData) {
       dispatch(setSenderData(loginData?.user));
       dispatch(setToken(loginData));
+      socket.emit("connected", senderData);
       navigate("/chat");
     }
   };

@@ -11,6 +11,7 @@ function Chatbox() {
   const { roomData } = useSelector((state) => state);
   const dispatch = useDispatch();
   const senderData = useSelector((state) => state.senderData);
+
   const roomId = receiverData?.roomId || roomData?.roomId;
 
   const [messages, setMessages] = useState([]);
