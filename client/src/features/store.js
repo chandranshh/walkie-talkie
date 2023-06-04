@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import senderDataSlice from "./slices/senderDataSlice";
 import getTokenSlice from "./slices/getTokenSlice";
 import setReceiverData from "./slices/setReceiverData";
+import setRoomData from "./slices/setRoomData";
 
 const persistConfigSenderData = {
   key: "senderData",
@@ -30,6 +31,7 @@ const store = configureStore({
     senderData: persistedReducerSenderData,
     tokenData: persistedReducerGetToken,
     receiverData: setReceiverData,
+    roomData: setRoomData,
   },
 });
 
