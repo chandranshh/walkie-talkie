@@ -6,7 +6,7 @@ This is a work-in-progress (WIP) project for a chat application built using the 
 
 ## Features
 
-- Real-time chat functionality
+- Real-time chat functionality.
 - User authentication and authorization
 - Edit username function (upcoming feature)
 - Responsive design using Tailwind CSS (not yet responsive will work on it 
